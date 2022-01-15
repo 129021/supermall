@@ -4,7 +4,11 @@
     <home-swiper :banners="banners"></home-swiper>
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view></feature-view>
-    <tab-control :titles="['流行','新款','精选']" class="tab-control"></tab-control>
+    <tab-control
+      :titles="['流行', '新款', '精选']"
+      class="tab-control"
+    ></tab-control>
+    <goods-list :goods="goods['pop'].list"></goods-list>
 
     <ul>
       <li>占空使能滚动1</li>
@@ -117,10 +121,11 @@ import NavBar from "../../components/common/navbar/NavBar.vue";
 
 import HomeSwiper from "./childComps/HomeSwiper.vue";
 import RecommendView from "./childComps/RecommendView.vue";
-import { getHomeMultidata } from "network/home";
+import { getHomeMultidata, getHomeGoods } from "network/home";
 import FeatureView from "./childComps/FeatureView.vue";
 // import TabControl from '../../components/content/tabControl/TabControl.vue';
-import TabControl from '../../components/content/tabControl/TabControl.vue';
+import TabControl from "../../components/content/tabControl/TabControl.vue";
+import GoodsList from '../../components/content/goods/GoodsList.vue';
 // import RecommendView from './childComps/RecommendView.vue';
 // import HomeSwiper from "./childComps/HomeSwiper.vue";
 // import Swiper from 'components/common/swiper/Swiper'
@@ -134,28 +139,52 @@ export default {
     RecommendView,
     FeatureView,
     TabControl,
+    GoodsList,
   },
   data() {
-   return {
+    return {
       // result: null,
       banners: [],
       recommends: [],
+      goods: {
+        pop: { page: 0, list: [] },
+        news: { page: 0, list: [] },
+        sell: { page: 0, list: [] },
+      },
     };
   },
   created() {
     // 1.  请求多个数据
-    getHomeMultidata().then((res) => {
-      // console.log(res);
-      // this.result = res;
-      this.banners = res.data.banner.list;
-      this.recommends = res.data.recommend.list;
-    });
+    this.getHomeMultidata();
+
+    // 2. 请求商品数据
+    this.getHomeGoods("pop");
+    this.getHomeGoods("news");
+    this.getHomeGoods("sell");
+  },
+  methods: {
+    getHomeMultidata() {
+      getHomeMultidata().then((res) => {
+        // console.log(res);
+        // this.result = res;
+        this.banners = res.data.banner.list;
+        this.recommends = res.data.recommend.list;
+      });
+    },
+
+    getHomeGoods(type) {
+      const page = this.goods[type].page + 1;
+      getHomeGoods(type, page).then((res) => {
+        this.goods[type].list.push(...res.data.list);
+        this.goods[type].page += 1;
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
-#home{
+#home {
   padding-top: 44px;
 }
 .home-nav {
@@ -168,10 +197,8 @@ export default {
   z-index: 9;
 }
 
-
-.tab-control{
-  position:sticky;
-  top:44px;
-
+.tab-control {
+  position: sticky;
+  top: 44px;
 }
 </style>
