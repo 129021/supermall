@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="goods-item">
     <img :src="goodsItem.show.img" alt="" />
     <div>
       <p>
@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .goods-item {
   padding-bottom: 40px;
   position: relative;

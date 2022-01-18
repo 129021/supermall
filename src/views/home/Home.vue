@@ -5,10 +5,10 @@
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view></feature-view>
     <tab-control
-      :titles="['流行', '新款', '精选']"
+      :titles="['流行', '新款', '精选']" @tabClick="tabClick"
       class="tab-control"
     ></tab-control>
-    <goods-list :goods="goods['pop'].list"></goods-list>
+    <goods-list :goods="goods[currentType].list"></goods-list>
 
     <ul>
       <li>占空使能滚动1</li>
@@ -148,9 +148,11 @@ export default {
       recommends: [],
       goods: {
         pop: { page: 0, list: [] },
-        news: { page: 0, list: [] },
+        new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
+      currentType:'pop',
+
     };
   },
   created() {
@@ -159,10 +161,29 @@ export default {
 
     // 2. 请求商品数据
     this.getHomeGoods("pop");
-    this.getHomeGoods("news");
+    this.getHomeGoods("new");
     this.getHomeGoods("sell");
   },
   methods: {
+    // 事件监听相关方法
+    tabClick(index){
+      // console.log(index);
+      switch(index){
+        case 0:
+          this.currentType="pop"
+          break
+        case 1:
+          this.currentType='new'
+          break
+        case 2:
+          this.currentType="sell"
+          break
+
+      }
+
+    },
+
+    // 网络请求相关方法
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
         // console.log(res);

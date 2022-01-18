@@ -3,7 +3,7 @@
     <goods-list-item v-for="item in goods" :goods-item="item" />
     <!-- <goods-list-item v-for="item in goods" :goods-item="item" /> -->
 
-  
+
 
   </div>
 </template>
@@ -26,5 +26,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.goods{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+
 </style>
