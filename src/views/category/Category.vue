@@ -128,6 +128,11 @@ export default {
     this.scroll.on('scroll',(position)=>{
       console.log(position);
     })
+
+    this.scroll.on('pullingUp',()=>{
+      // '上拉加载更多'
+      
+    })
   }
 };
 </script>
