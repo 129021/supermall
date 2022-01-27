@@ -111,7 +111,7 @@
 import BScroll from "better-scroll";
 export default {
   name: "Category",
-  data() {
+  data() {    x
     return {
       scroll: null,
     };
@@ -121,7 +121,13 @@ export default {
   },
   mounted(){
     // console.log(this.$refs.aaa);
-    this.scroll=BScroll(document.querySelector('.wrapper'))
+    this.scroll= new BScroll(document.querySelector('.wrapper'),{
+      probeType:3
+    })
+
+    this.scroll.on('scroll',(position)=>{
+      console.log(position);
+    })
   }
 };
 </script>
