@@ -131,7 +131,7 @@ export default {
 
     this.scroll.on('pullingUp',()=>{
       // '上拉加载更多'
-      
+
     })
   }
 };
@@ -149,3 +149,4 @@ export default {
 
 
 // 2022-1-20 :not study
+// 2022-1-28 not study
