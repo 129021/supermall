@@ -1,16 +1,22 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view></feature-view>
-    <tab-control
-      :titles="['流行', '新款', '精选']" @tabClick="tabClick"
-      class="tab-control"
-    ></tab-control>
-    <goods-list :goods="goods[currentType].list"></goods-list>
 
-    <ul>
+    <!-- <scroll class="content"> -->
+      <home-swiper :banners="banners"></home-swiper>
+      <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view></feature-view>
+      <tab-control
+        :titles="['流行', '新款', '精选']"
+        @tabClick="tabClick"
+        class="tab-control"
+      ></tab-control>
+      <goods-list :goods="goods[currentType].list"></goods-list>
+    <!-- </scroll> -->
+
+    <back-top @click.native="backClick"></back-top>
+
+    <!-- <ul>
       <li>占空使能滚动1</li>
       <li>占空使能滚动2</li>
       <li>占空使能滚动3</li>
@@ -111,7 +117,7 @@
       <li>占空使能滚动98</li>
       <li>占空使能滚动99</li>
       <li>占空使能滚动100</li>
-    </ul>
+    </ul>-->
   </div>
 </template>
 
@@ -125,11 +131,14 @@ import { getHomeMultidata, getHomeGoods } from "network/home";
 import FeatureView from "./childComps/FeatureView.vue";
 // import TabControl from '../../components/content/tabControl/TabControl.vue';
 import TabControl from "../../components/content/tabControl/TabControl.vue";
-import GoodsList from '../../components/content/goods/GoodsList.vue';
+import GoodsList from "../../components/content/goods/GoodsList.vue";
+
+// import Scroll from "../../components/common/scroll/Scroll.vue";
 // import RecommendView from './childComps/RecommendView.vue';
 // import HomeSwiper from "./childComps/HomeSwiper.vue";
 // import Swiper from 'components/common/swiper/Swiper'
 // import SwiperItem from 'components/common/swiper/SwiperItem'
+import BackTop from '../../components/content/backTop/BackTop.vue'
 
 export default {
   name: "Home",
@@ -140,6 +149,8 @@ export default {
     FeatureView,
     TabControl,
     GoodsList,
+    // Scroll,
+    BackTop
   },
   data() {
     return {
@@ -151,8 +162,7 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
-      currentType:'pop',
-
+      currentType: "pop",
     };
   },
   created() {
@@ -166,21 +176,19 @@ export default {
   },
   methods: {
     // 事件监听相关方法
-    tabClick(index){
+    tabClick(index) {
       // console.log(index);
-      switch(index){
+      switch (index) {
         case 0:
-          this.currentType="pop"
-          break
+          this.currentType = "pop";
+          break;
         case 1:
-          this.currentType='new'
-          break
+          this.currentType = "new";
+          break;
         case 2:
-          this.currentType="sell"
-          break
-
+          this.currentType = "sell";
+          break;
       }
-
     },
 
     // 网络请求相关方法
@@ -198,6 +206,8 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
+
+        // this.$refs.scroll.scroll.finishPullUp()
       });
     },
   },
@@ -205,8 +215,12 @@ export default {
 </script>
 
 <style scoped>
+/* vh viewport height 视口高度 */
 #home {
   padding-top: 44px;
+
+
+  height: 100vh;
 }
 .home-nav {
   background-color: var(--color-tint);
@@ -222,4 +236,11 @@ export default {
   position: sticky;
   top: 44px;
 }
+
+.content{
+  height: calc(100% - 93px);
+  margin-top:44px;
+  overflow:hidden
+}
+
 </style>

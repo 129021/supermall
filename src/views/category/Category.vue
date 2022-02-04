@@ -122,7 +122,8 @@ export default {
   mounted(){
     // console.log(this.$refs.aaa);
     this.scroll= new BScroll(document.querySelector('.wrapper'),{
-      probeType:3
+      probeType:3,
+      pullUpLoad:true
     })
 
     this.scroll.on('scroll',(position)=>{
