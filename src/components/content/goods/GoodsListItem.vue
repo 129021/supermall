@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <img :src="goodsItem.show.img" alt="" />
     <div>
       <p>
@@ -20,6 +20,13 @@ export default {
       default() {
         return {};
       },
+    },
+  },
+  methods: {
+    itemClick() {
+      // 跳转到对应的详情页
+      // console.log('点击商品卡片跳转到对应的详情页');
+      this.$router.push('/detail/' + this.goodsItem.iid);
     },
   },
 };

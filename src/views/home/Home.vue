@@ -6,10 +6,9 @@
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
-      <tab-control
+      <tab-control class="tab-control"
         :titles="['流行', '新款', '精选']"
         @tabClick="tabClick"
-        class="tab-control"
       ></tab-control>
       <goods-list :goods="goods[currentType].list"></goods-list>
     <!-- </scroll> -->
@@ -163,6 +162,9 @@ export default {
         sell: { page: 0, list: [] },
       },
       currentType: "pop",
+      isShowBackTop:false,
+      tabOffsetTop:0,
+      saveY:0,
     };
   },
   created() {
@@ -173,6 +175,23 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+  },
+  mounted() {
+    // 1.图片加载完成的事件监听
+    // const refresh=document(this.$refs.scroll.refresh,50)
+    // this.$bus.$on('itemImageLoad',()=>{
+    //   refresh()
+    // })
+
+    // 2. 获取tabControl的offsetTop
+    // 所有组件中都有一个属性$el:这个属性是用于获取组件中的元素
+    // console.log(this.$refs.TabControl.$el.offsetTop);
+  },
+  destroyed() {
+
+  },
+  activated() {
+
   },
   methods: {
     // 事件监听相关方法
@@ -190,6 +209,10 @@ export default {
           break;
       }
     },
+
+    // swiperImageLoad(){
+    //   this.tabOffsetTop=this.$refs.tabControl.$el.offsetTop
+    // },
 
     // 网络请求相关方法
     getHomeMultidata() {
@@ -231,16 +254,17 @@ export default {
   top: 0;
   z-index: 9;
 }
-
-.tab-control {
-  position: sticky;
-  top: 44px;
+.tab-control{
+  position:sticky;
+  top:44px;
+  z-index:9
 }
 
-.content{
+
+/* .content{
   height: calc(100% - 93px);
   margin-top:44px;
   overflow:hidden
-}
+} */
 
 </style>
