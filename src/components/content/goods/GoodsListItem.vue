@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="goodsItem.show.img" alt="" />
+    <img :src="showImage" alt="" />
     <div>
       <p>
         {{ goodsItem.title }}
@@ -22,7 +22,15 @@ export default {
       },
     },
   },
+  computed:{
+    showImage(){
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
   methods: {
+    imgLoad(){
+
+    },
     itemClick() {
       // 跳转到对应的详情页
       // console.log('点击商品卡片跳转到对应的详情页');

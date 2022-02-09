@@ -8,6 +8,7 @@
     <detial-goods-info :detail-info="detailInfo" />
     <detail-param-info :param-info="parmaInfo" />
     <detail-comment-info :comment-info="commentInfo"/>
+    <goods-list :goods="recommends"/>
   </div>
 </template>
 
@@ -26,6 +27,8 @@ import DetialGoodsInfo from './childComponents/DetailGoodsInfo.vue'
 import DetailParamInfo from './childComponents/DetailParamInfo.vue'
 
 import DetailCommentInfo from './childComponents/DetailCommentInfo.vue'
+
+import GoodsList from '../../components/content/goods/GoodsList.vue'
 export default {
   name: "Detail",
   data() {
@@ -73,10 +76,16 @@ export default {
     });
 
 
+
     // 请求推荐数据
     getRecommend().then(res=>{
       // console.log(res);
       this.recommends=res.data.list
+    })
+  },
+  mounted() {
+    this.$bus.$on('itemImageLoad',()=>{
+      
     })
   },
   components: {
@@ -87,6 +96,7 @@ export default {
     DetialGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    GoodsList
 
   },
 };
