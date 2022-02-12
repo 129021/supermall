@@ -9,7 +9,7 @@
     <detail-param-info :param-info="parmaInfo" />
     <detail-comment-info :comment-info="commentInfo"/>
     <goods-list :goods="recommends"/>
-    <detail-bottom-bar/>
+    <detail-bottom-bar @addCart="addToCart"/>
   </div>
 </template>
 
@@ -38,6 +38,7 @@ export default {
     return {
       iid: null,
       topImages: [],
+      goodsInfo:{},
       goods: {},
       shop:{},
       detailInfo:{},
@@ -102,6 +103,25 @@ export default {
     GoodsList,
     DetailBottomBar
 
+  },
+  methods: {
+    addToCart(){
+      // console.log('-----------');
+      // 1. 获取购物车需要展示的信息
+      const product={}
+      product.image=this.topImages[0];
+      product.title=this.goodsInfo.title;
+      product.desc=this.goodsInfo.desc;
+      product.price=this.goodsInfo.newPrice;
+      product.iid=this.iid;
+
+
+
+      // 2.将商品添加到购物车里面
+      this.$store.commit('addCart',product)
+
+
+    }
   },
 };
 </script>

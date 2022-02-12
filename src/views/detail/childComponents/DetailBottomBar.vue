@@ -24,13 +24,19 @@
 <script>
 export default {
 name:'DetailBottomBar',
+methods: {
+  addToCart(){
+    // console.log('点击添加到购物车');
+    this.$emit('addCart')
+  }
+},
 
 }
 </script>
 
 <style scoped>
 .bottom-bar {
-    height: 58px;
+    height: 49px;
     position: fixed;
     background-color: #fff;
     left: 0;
