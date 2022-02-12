@@ -9,6 +9,7 @@
     <detail-param-info :param-info="parmaInfo" />
     <detail-comment-info :comment-info="commentInfo"/>
     <goods-list :goods="recommends"/>
+    <detail-bottom-bar/>
   </div>
 </template>
 
@@ -29,6 +30,8 @@ import DetailParamInfo from './childComponents/DetailParamInfo.vue'
 import DetailCommentInfo from './childComponents/DetailCommentInfo.vue'
 
 import GoodsList from '../../components/content/goods/GoodsList.vue'
+
+import DetailBottomBar from './childComponents/DetailBottomBar.vue'
 export default {
   name: "Detail",
   data() {
@@ -85,7 +88,7 @@ export default {
   },
   mounted() {
     this.$bus.$on('itemImageLoad',()=>{
-      
+
     })
   },
   components: {
@@ -96,7 +99,8 @@ export default {
     DetialGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    GoodsList
+    GoodsList,
+    DetailBottomBar
 
   },
 };
@@ -108,6 +112,11 @@ export default {
   position:relative;
   z-index:9;
 
+}
+
+.content{
+  background-color: #fff;
+  height: calc(100%-44px-49px);
 }
 </style>
 
