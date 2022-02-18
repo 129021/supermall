@@ -8,23 +8,27 @@ export default new Vuex.Store({
     cartList:[]
   },
   mutations: {
-    addCart(state,payload){
+
+  },
+  actions: {
+    addCart(context,payload){
       // payload新添加的商品
-      let oldProduct=null;
-      for (let item of state.cartList){
-        if(item.iid===payload.iid){
-          oldProduct=item;
-        }
-      }
+      let oldProduct=context.state.cartList.find(item=>item.iid===payload.iid)
+
 
 
       // 2. 判断oldProduct
-      
-      state.cartList.push(payload)
+      if(oldProduct){
+        oldProduct.count+=1
+
+      }else{
+        payload.count=1
+        context.state.cartList.push(payload)
+      }
+
+      // state.cartList.push(payload)
 
     }
-  },
-  actions: {
   },
   modules: {
   }
